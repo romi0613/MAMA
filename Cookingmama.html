@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>쿠킹마마 홈페이지</title>
+  <style>
+    
+    @font-face {
+  font-family: 'DDOSSaemmul';
+  src: url('DOSSaemmul.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fffce9;
+      background-image: 
+        radial-gradient(#fbcce7 4px, transparent 4px),
+        radial-gradient(#fbcce7 4px, transparent 4px);
+      background-position: 0 0, 20px 20px;
+      background-size: 40px 40px;
+      font-family: 'DOSSaemmul', Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .frame {
+      border: 10px solid #ff99c8;
+      padding: 50px 80px;
+      margin: 40px auto;
+      max-width: 2000px;
+      height: 85vh;
+      box-sizing: border-box;
+      background-image: url('이미지/배경.png'); /* 배경 이미지 적용 */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 30px;
+      box-shadow: inset 0 0 0 6px #fff;
+      position: relative;
+    }
+
+    .logo {
+      position: absolute;
+      top: 25px;
+      left: -100px;
+      font-size: 230px;
+      font-weight: bold;
+      color: #ff4794;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s;
+      text-shadow:
+    -10px -10px 0 #ffe6f0,
+     10px -10px 0 #ffe6f0,
+    -10px  10px 0 #ffe6f0,
+     10px  10px 0 #ffe6f0;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .subtitle {
+  position: absolute;
+  top: 270px; /* 로고 아래 여백 맞춰서 조절 */
+  left: 50px;
+  font-size: 80px;
+  font-weight: bold;
+  color: #ff4794;
+  text-shadow:
+    -5px -5px 0 #fffbe4,
+     5px -5px 0 #fffbe4,
+    -5px  5px 0 #fffbe4,
+     5px  5px 0 #fffbe4;
+}
+
+    .menu {
+      position: absolute;
+      top: 500px;
+      left: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 35px;
+    }
+
+    .menu button {
+      background-color: #ffffff;
+      border: 5px solid #ff7ab3;
+      border-radius: 30px;
+      padding: 20px 50px;
+      font-family: 'DOSSaemmul', Arial, sans-serif;
+      font-size: 80px;
+      font-weight: bold;
+      color: #ff3d8e;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 4px 4px 0 #ffbfdc;
+    }
+
+    .menu button:hover {
+      background-color: #ffeaf2;
+      transform: translateX(5px);
+    }
+
+    .character-box {
+      position: absolute;
+      right: 100px;
+      bottom: 80px;
+      width: 750px;
+      height: 400px;
+      overflow: visible;
+      background-color: transparent;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .character-shadow {
+      position: absolute;
+      width: 780px; /* 조금 더 크게 */
+      bottom: 0;
+      transform: translate(25px, 25px); /* 오른쪽 아래로 살짝 이동 */
+      z-index: 0;
+      opacity: 1;
+      animation: slideUp 0.8s ease-out forwards, floaty 2.5s ease-in-out infinite;
+      animation-delay: 0.3s, 1.1s;
+    }
+
+
+    .character {
+      width: 750px;
+      position: relative;
+      bottom: -100%;
+      animation: slideUp 0.8s ease-out forwards, floaty 2.5s ease-in-out infinite;
+      animation-delay: 0.3s, 1.1s;
+    }
+
+    /* 음식 이미지 공통 스타일 */
+    .floating-food {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      opacity: 0;
+      transform: scale(0.8);
+      animation:
+        foodAppear 0.8s ease-out forwards,
+        floaty 3s ease-in-out infinite,
+        sparkle 2.5s ease-in-out infinite;
+    }
+
+    .food-top {
+      top: -550px;
+      left: 60%;
+      transform: translateX(-50%) scale(0.8);
+      animation-delay: 0.5s, 1.3s, 2.5s;
+    }
+
+    .food-left {
+      bottom: 100px;
+      left: -100px;
+      animation-delay: 0.7s, 1.5s, 2.7s;
+    }
+
+    .food-right {
+      bottom: -50px;
+      right: -270px;
+      animation-delay: 0.9s, 1.7s, 2.9s;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      opacity: 0;
+      animation:
+        sparkleAppear 0.8s ease-out forwards,
+        floaty 3s ease-in-out infinite,
+        sparkleTwinkle 2s infinite ease-in-out;
+    }
+
+    .sparkle1 { top: -80px; left: 50px; animation-delay: 0.3s, 0.5s, 0.8s; }
+    .sparkle2 { top: -30px; right: 100px; animation-delay: 0.6s, 0.7s, 1.1s; }
+    .sparkle3 { bottom: 150px; left: 60px; animation-delay: 0.9s, 1.0s, 1.3s; }
+    .sparkle4 { top: 10px; right: 0px; animation-delay: 1.2s, 1.3s, 1.6s; }
+    .sparkle5 { bottom: 100px; right: 200px; animation-delay: 1.5s, 1.6s, 1.9s; }
+
+    .floating-sparkle {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  background-image: url('이미지/반짝.png'); /* 반짝이 PNG 경로 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+  animation: sparkleFloat 6s ease-in-out infinite, sparkleBlink 2.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@keyframes sparkleFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes sparkleBlink {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+@keyframes clickPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.pop-on-click {
+  animation: clickPop 0.3s ease;
+}
+
+    @keyframes slideUp {
+      0% {
+        bottom: -100%;
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        bottom: 0;
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes foodAppear {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes floaty {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes sparkleAppear {
+      0% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes sparkleTwinkle {
+      0%, 100% {
+        opacity: 0.8;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.3);
+      }
+    }
+
+    footer {
+      text-align: center;
+      font-size: 30px;
+      color: #aa6699;
+      padding: 20px;
+      border-top: 3px dashed #ffcce5;
+      background-color: #ffe6f2;
+    }
+
+    
+  </style>
+</head>
+<body>
+
+  <audio id="bg-music" autoplay muted loop>
+    <source src="쿠킹마마 홈_배경음악.mp3" type="audio/mpeg">
+  </audio>
+
+   <!-- 음소거 버튼 -->
+<button id="mute-btn" style="
+position: absolute;
+top: 50px;
+right: 50px;
+background: none;
+border: none;
+cursor: pointer;
+z-index: 10000;
+">
+<img id="mute-icon" src="이미지/확성기.png" alt="음소거" style="width: 80px; height: 80px;">
+</button>
+
+  <div class="sparkle-container"></div>
+
+  <div class="frame">
+    
+    <!-- 로고 -->
+    <a class="logo" href="#">Cooking Mama</a>
+    <div class="subtitle">맛있고 귀여운 음식 세상!</div>
+
+    <!-- 세로 메뉴 버튼 -->
+    <div class="menu">
+      <button>쿠킹마마</button>
+      <button>레시피</button>
+      <button>요리팁</button>
+    </div>
+
+    <!-- 캐릭터 및 음식들 -->
+    <div class="character-box">
+      
+       <!-- 실루엣 그림자 -->
+       <img src="이미지/그림자.png" alt="실루엣" class="character-shadow">
+
+      <img src="이미지/쿠킹마마 홈 이미지2.png" alt="쿠킹마마" class="character">
+
+      <!-- 음식 이미지들 (위, 좌, 우) -->
+      <img src="이미지/푸딩.png" alt="음식1" class="floating-food food-top">
+      <img src="이미지/치즈오믈렛.png" alt="음식2" class="floating-food food-left">
+      <img src="이미지/덴푸라 우동.png" alt="음식3" class="floating-food food-right">
+
+      <!-- 반짝이 이미지들 -->
+      <img src="이미지/반짝.png" class="sparkle sparkle1" alt="반짝이">
+<img src="이미지/반짝.png" class="sparkle sparkle2" alt="반짝이">
+<img src="이미지/반짝.png" class="sparkle sparkle3" alt="반짝이">
+<img src="이미지/반짝.png" class="sparkle sparkle4" alt="반짝이">
+<img src="이미지/반짝.png" class="sparkle sparkle5" alt="반짝이">
+    </div>
+
+  </div>
+
+  <footer>
+    ⓒ 2025 쿠킹마마 팬페이지 | 비공식 사이트입니다.
+  </footer>
+
+<script>
+
+const music = document.getElementById('bg-music');
+  const muteBtn = document.getElementById('mute-btn');
+  const muteIcon = document.getElementById('mute-icon');
+
+  muteBtn.addEventListener('click', () => {
+    if (music.muted) {
+      music.muted = false;
+      music.play(); // 중요: 음소거 해제 후 play() 호출
+      muteIcon.src = '이미지/확성기.png';
+    } else {
+      music.muted = true;
+      muteIcon.src = '이미지/음소거.png';
+    }
+  
+
+   // 아이콘 클릭 애니메이션 (매번 실행되도록 클래스 잠깐 붙였다 떼기)
+   muteIcon.classList.remove('pop-on-click'); // 이전에 붙었을 수도 있으니 초기화
+  void muteIcon.offsetWidth; // 리플로우 강제 발생해서 애니메이션 재실행
+  muteIcon.classList.add('pop-on-click');
+});
+
+  const sparkleContainer = document.querySelector('.sparkle-container');
+  const sparkleCount = 30;
+
+  for (let i = 0; i < sparkleCount; i++) {
+    const sparkle = document.createElement('div');
+    sparkle.classList.add('floating-sparkle');
+
+    // 무작위 위치
+    sparkle.style.top = `${Math.random() * 100}vh`;
+    sparkle.style.left = `${Math.random() * 100}vw`;
+
+    // 무작위 크기와 애니메이션 지연
+    const scale = 0.6 + Math.random() * 0.8;
+    sparkle.style.transform = `scale(${scale})`;
+    sparkle.style.animationDelay = `${Math.random() * 3}s, ${Math.random() * 3}s`;
+
+    sparkleContainer.appendChild(sparkle);
+  }
+</script>
+
+</body>
+</html>
+
+
+
+
